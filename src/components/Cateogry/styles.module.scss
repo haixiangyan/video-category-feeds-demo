@@ -1,0 +1,25 @@
+.category {
+  width: 100%;
+  overflow: auto;
+
+  ul {
+    padding: 16px;
+    display: flex;
+
+    li {
+      list-style: none;
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      video {
+        background: black;
+        border-radius: 6px;
+        width: 136px;
+        height: 240px;
+      }
+    }
+  }
+}
