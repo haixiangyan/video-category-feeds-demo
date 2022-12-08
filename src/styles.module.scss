@@ -27,6 +27,10 @@
   .scrollView {
     height: 100vh;
     overflow: auto;
+
+    .offset {
+      height: calc(2 * 56px)
+    }
   }
 
   h2 {

@@ -23,23 +23,25 @@ import classNames from "classnames";
 const App = () => {
   const oldYRef = useRef<number>(0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef<HTMLDivElement>(null);
 
   const [hidden, setHidden] = useState<boolean>(false);
 
   const onScroll = () => {
-    if (contentRef.current) {
-      const { top: newY } = contentRef.current.getBoundingClientRect();
+    if (contentRef.current && offsetRef.current) {
+      const { bottom: offsetBottom } = offsetRef.current.getBoundingClientRect();
 
-      const delta = newY - oldYRef.current;
+      // 下滑超过 56 px 才做交互
+      if (offsetBottom < 0) {
+        const { top: newY } = contentRef.current.getBoundingClientRect();
 
-      oldYRef.current = newY;
+        // 计算向上还是向下滑动
+        const delta = newY - oldYRef.current;
 
-      if (delta < 0) {
-        // 隐藏
-        setHidden(true);
-      } else {
-        // 显示
-        setHidden(false);
+        // 更新上一次的 Y 值
+        oldYRef.current = newY;
+
+        setHidden(delta < 0);
       }
     }
   };
@@ -55,6 +57,8 @@ const App = () => {
       <div className={styles.line}></div>
 
       <div className={styles.scrollView} onScroll={onScroll}>
+        <div ref={offsetRef} className={styles.offset}/>
+
         <img className={styles.banner} src={BannerImage} alt="Banner"/>
 
         <div ref={contentRef} className={styles.content}>
