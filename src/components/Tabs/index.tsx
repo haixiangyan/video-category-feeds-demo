@@ -1,8 +1,9 @@
 import {FC} from "react";
+import styles from './styles.module.scss';
 
 const Tabs: FC = () => {
   return (
-    <div>Tabs</div>
+    <div className={styles.tabs}>Tabs</div>
   )
 }
 
